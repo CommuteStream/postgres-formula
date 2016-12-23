@@ -7,6 +7,7 @@
   {% if repo.use_upstream_repo %}
 
     {% set data_dir = '/var/lib/pgsql/' ~ repo.version ~ '/data' %}
+    {% set shortvsn = repo.version | replace('.', '') %}
 
 # PostgreSQL from upstream repository
 
@@ -25,7 +26,7 @@ default:
 '7':
   prepare_cluster:
     user: root
-    command: /usr/pgsql-{{ repo.version }}/bin/postgresql95-setup initdb
+    command: /usr/pgsql-{{ repo.version }}/bin/postgresql{{shortvsn}}-setup initdb
     test: test -f {{ data_dir }}/PG_VERSION
     env: {}
 
