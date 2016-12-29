@@ -59,24 +59,22 @@ postgresql-conf:
 
 {%- endif %}
 
-postgresql-pg_hba:
-  file.managed:
-    - name: {{ postgres.conf_dir }}/pg_hba.conf
-    - source: {{ postgres['pg_hba.conf'] }}
-    - template: jinja
-    - user: {{ postgres.user }}
-    - group: {{ postgres.group }}
-    - mode: 600
-    - require:
-      - file: postgresql-config-dir
+#postgresql-pg_hba:
+#  file.managed:
+#    - name: {{ postgres.conf_dir }}/pg_hba.conf
+#    - source: {{ postgres['pg_hba.conf'] }}
+#    - template: jinja
+#    - user: {{ postgres.user }}
+#    - group: {{ postgres.group }}
+#    - mode: 600
+#    - require:
+#      - file: postgresql-config-dir
 
 postgresql-running:
   service.running:
     - name: {{ postgres.service }}
     - enable: True
     - reload: True
-    - watch:
-      - file: postgresql-pg_hba
 
 {%- for name, tblspace in postgres.tablespaces|dictsort() %}
 
